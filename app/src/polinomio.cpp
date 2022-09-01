@@ -6,7 +6,7 @@ Polinomio::Polinomio(terminos_t terminos) : terminos(terminos)
 {
 }
 
-double Polinomio::raiz() const
+double Polinomio::resolver() const
 {
     // @TODO Implementar método.
     return 0.0;
