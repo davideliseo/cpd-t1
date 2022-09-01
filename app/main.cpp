@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include "polinomio.hpp"
 
 /**
  * Función que muestra los integrantes del grupo.
@@ -17,7 +18,8 @@ int main(int argc, char **argv)
 {
     if (argc > 1)
     {
-        // @TODO Programar proyecto.
+        const Polinomio polinomio({});
+        std::cout << polinomio.raiz() << '\n';
     }
 
     integrantes(); // Mostrar los integrantes.
