@@ -2,37 +2,31 @@
 #include <string>
 #include <cstdlib>
 
+/**
+ * Función que muestra los integrantes del grupo.
+ */
+void integrantes();
 
 /**
- * Función que muestra los participantes del grupo
- * @param programa nombre del ejecutable
+ * Taller 1 de Paralela.
+ * @param argc Cantidad de argumentos.
+ * @param argv Argumentos.
+ * @return El código de salida del programa.
  */
-void participantes(std::string programa);
-
-/**
- * Taller computacional
- * @param argc cantidad de argumentos
- * @param argv argumentos
- * @return El código de salida del programa
- */
-int main(int argc, char** argv) {
-
-    /**
-     * Incluir acá la lógica del programa
-     * 
-     */
-    if (argc > 1) {
-        // @TODO programar proyecto
-    } else {
-        // Mostrar los integrantes
-        participantes(argv[0]);
+int main(int argc, char **argv)
+{
+    if (argc > 1)
+    {
+        // @TODO Programar proyecto.
     }
+
+    integrantes(); // Mostrar los integrantes.
     return EXIT_SUCCESS;
 }
 
-void participantes(std::string programa) {
-    std::cout << std::endl << "=== Taller " << programa << " ===" << std::endl;
-    std::cout << std::endl << "Juanito"; // Reemplazar por su nombre
-    std::cout << std::endl << "Pedrito"; // Reemplazar por su nombre
-    std::cout << std::endl << "Dieguito" << std::endl; // Reemplazar por su nombre
+void integrantes()
+{
+    std::cout << "=== Integrantes ===\n";
+    std::cout << "Catalina Ponce Puebla\n";
+    std::cout << "David Uribe Fuentes\n";
 }
