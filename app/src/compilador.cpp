@@ -14,11 +14,11 @@ Compilador::tokens_t Compilador::tokenizar() const
 // @TODO Implementar método.
 Monomio Compilador::evaluarToken() const
 {
-    return Monomio(0, 0);
+    return Monomio(0.0, 0);
 }
 
 // @TODO Implementar método.
-bool Compilador::valido() const
+bool Compilador::esValido() const
 {
     return true;
 }
@@ -26,7 +26,7 @@ bool Compilador::valido() const
 // @TODO Implementar método.
 Polinomio Compilador::compilar() const
 {
-    if (!this->valido())
+    if (!this->esValido())
     {
         throw std::invalid_argument("La expresión no es válida.");
     }

@@ -19,9 +19,9 @@ public:
 
     /**
      * Función que determina si la expresión es válida.
-     * @return Verdadero si la expresión es válida, falso en caso contrario.
+     * @return true si la expresión es válida, false en caso contrario.
      */
-    bool valido() const;
+    bool esValido() const;
 
     /**
      * Función que compila la expresión en un polinomio.
