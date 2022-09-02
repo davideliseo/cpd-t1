@@ -11,6 +11,8 @@ public:
     using terminos_t = std::vector<Monomio>;
     terminos_t terminos;
 
+    Monomio::grado_t grado() const;
+
     /**
      * Constructor de la clase Polinomio.
      */
