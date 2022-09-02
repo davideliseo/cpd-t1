@@ -2,6 +2,7 @@
 #define POLINOMIO_HPP
 
 #include <vector>
+#include <compare>
 #include "monomio.hpp"
 
 class Polinomio
@@ -26,6 +27,22 @@ public:
      * @return El derivado del polinomio.
      */
     Polinomio derivado() const;
+
+    /**
+     * Operador de comparaciones de ordenamiento.
+     * @param otro El polinomio comparado.
+     */
+    auto operator<=>(const Polinomio &otro) const {
+        if (terminos < otro.terminos) return -1;
+        if (terminos > otro.terminos) return 1;
+        return 0;
+    }
+
+    /**
+     * Operador de comparaciones de igualdad.
+     * @param otro El polinomio comparado.
+     */
+    bool operator==(const Polinomio &otro) const = default;
 };
 
 #endif

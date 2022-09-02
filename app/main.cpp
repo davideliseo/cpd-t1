@@ -50,7 +50,8 @@ void resolver(std::string expresion)
 {
     Compilador compilador(expresion);
     Polinomio polinomio = compilador.compilar();
-    polinomio.resolver();
+    auto solucion = polinomio.resolver();
+    std::cout << "Solución: " << solucion << '\n';
 }
 
 void integrantes()
