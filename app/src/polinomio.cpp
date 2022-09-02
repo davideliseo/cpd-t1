@@ -1,7 +1,10 @@
 #include <iostream>
+#include <cmath>
 #include <algorithm>
 #include <vector>
 #include "polinomio.hpp"
+
+#define EPSILON 0.001
 
 Polinomio::Polinomio(terminos_t terminos) : terminos(terminos)
 {
@@ -30,8 +33,21 @@ double Polinomio::evaluar(double x) const
 
 double Polinomio::resolver() const
 {
-    // @TODO Implementar método.
-    return 0.0;
+    const auto derivado = this->derivado();
+    double x = 0.0, fx, fdx;
+
+    while (std::fabs((fx = this->evaluar(x))) >= EPSILON)
+    {
+        fdx = derivado.evaluar(x);
+
+        if (fdx == 0.0)
+            throw std::runtime_error("La derivada del polinomio es cero. "
+                                     "El método Newton-Raphson no converge.");
+
+        x -= fx / fdx;
+    }
+
+    return x;
 }
 
 Polinomio Polinomio::derivado() const
