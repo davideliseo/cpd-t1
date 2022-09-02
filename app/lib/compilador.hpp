@@ -21,7 +21,7 @@ public:
      * Función que determina si la expresión es válida.
      * @return true si la expresión es válida, false en caso contrario.
      */
-    bool esValido() const;
+    bool es_valido() const;
 
     /**
      * Función que compila la expresión en un polinomio.
@@ -40,7 +40,7 @@ private:
      * Función que convierte un token a monomio.
      * @return El monomio convertido a partir del token.
      */
-    Monomio evaluarToken() const;
+    Monomio evaluar_token() const;
 };
 
 #endif

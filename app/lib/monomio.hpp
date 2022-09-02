@@ -22,13 +22,13 @@ public:
      * Función que indica si el monomio es cero.
      * @return true si el monomio es cero, false en caso contrario.
      */
-    bool esCero() const;
+    bool es_cero() const;
 
     /**
      * Función que determina si el monomio es constante.
      * @return true si el monomio es constante, false en caso contrario.
      */
-    bool esConstante() const;
+    bool es_constante() const;
 
     /**
      * Función que calcula el valor del monomio para un valor de x.
@@ -58,6 +58,14 @@ public:
      * @param otro El polinomio comparado.
      */
     bool operator==(const Monomio &otro) const = default;
+
+    /**
+     * Operador de salida.
+     * @param out El stream de salida.
+     * @param monomio El monomio de salida.
+     * @return El stream de salida.
+     */
+    friend std::ostream& operator<<(std::ostream& out, const Monomio& monomio);
 };
 
 #endif

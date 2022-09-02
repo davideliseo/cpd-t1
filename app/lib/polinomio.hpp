@@ -51,6 +51,14 @@ public:
      * @param otro El polinomio comparado.
      */
     bool operator==(const Polinomio &otro) const = default;
+
+    /**
+     * Operador de salida.
+     * @param out El stream de salida.
+     * @param polinomio El polinomio de salida.
+     * @return El stream de salida.
+     */
+    friend std::ostream& operator<<(std::ostream& out, const Polinomio& polinomio);
 };
 
 #endif

@@ -35,6 +35,10 @@ int main(int argc, char **argv)
         std::string expresion = argv[1];
         std::cout << "Expresión: " << expresion << '\n';
         resolver(expresion);
+
+        auto polinomio = Polinomio({{1, 3}, {1, 1}, {-1, 0}}); // x**3 + x - 1
+        std::cout << polinomio << '\n';
+        std::cout << polinomio.resolver() << '\n';
     }
 
     integrantes();
@@ -48,8 +52,8 @@ void titulo(std::string titulo)
 
 void resolver(std::string expresion)
 {
-    Compilador compilador(expresion);
-    Polinomio polinomio = compilador.compilar();
+    auto compilador = Compilador(expresion);
+    auto polinomio = compilador.compilar();
     auto solucion = polinomio.resolver();
     std::cout << "Solución: " << solucion << '\n';
 }
