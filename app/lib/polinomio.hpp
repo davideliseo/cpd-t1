@@ -19,6 +19,12 @@ public:
     Polinomio(terminos_t terminos);
 
     /**
+     * Función que calcula el valor del polinomio para un valor de x.
+     * @return El valor del polinomio para un valor de x.
+     */
+    double evaluar(double x) const;
+
+    /**
      * Función que calcula la raíz del polinomio utilizando el método Newton-Raphson.
      * @return La raíz del polinomio.
      */

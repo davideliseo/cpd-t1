@@ -16,6 +16,18 @@ Monomio::grado_t Polinomio::grado() const
     return mayor->grado;
 }
 
+double Polinomio::evaluar(double x) const
+{
+    auto resultado = 0.0;
+
+    for (const auto &monomio : this->terminos)
+    {
+        resultado += monomio.evaluar(x);
+    }
+
+    return resultado;
+}
+
 double Polinomio::resolver() const
 {
     // @TODO Implementar método.

@@ -31,6 +31,12 @@ public:
     bool esConstante() const;
 
     /**
+     * Función que calcula el valor del monomio para un valor de x.
+     * @return El valor del monomio para un valor de x.
+     */
+    double evaluar(double x) const;
+
+    /**
      * Función que calcula el derivado del monomio.
      * @return El derivado del monomio.
      */

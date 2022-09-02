@@ -1,3 +1,4 @@
+#include <cmath>
 #include "monomio.hpp"
 
 Monomio::Monomio(coeficiente_t coeficiente, grado_t grado)
@@ -13,6 +14,11 @@ bool Monomio::esCero() const
 bool Monomio::esConstante() const
 {
     return this->grado == 0;
+}
+
+double Monomio::evaluar(double x) const
+{
+    return this->coeficiente * std::pow(x, this->grado);
 }
 
 Monomio Monomio::derivado() const
