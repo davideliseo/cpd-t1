@@ -24,6 +24,19 @@ double Polinomio::resolver() const
 
 Polinomio Polinomio::derivado() const
 {
-    // @TODO Implementar método.
-    return Polinomio({});
+    terminos_t derivados;
+
+    for (const auto &monomio : this->terminos)
+    {
+        auto derivado = monomio.derivado();
+
+        // No agregar a la lista de términos aquellos monomios que sean cero.
+        if (!derivado.esCero())
+        {
+            derivados.push_back(derivado);
+        }
+    }
+
+    return Polinomio(derivados);
+}
 }
