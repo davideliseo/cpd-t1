@@ -8,6 +8,9 @@ LIBS = -lm
 directorios:
 	$(MKDIR) build dist
 
+utils.o: directorios src/utils.cpp
+	$(CXX) $(CXXFLAGS) -c src/utils.cpp -o build/utils.o
+
 compilador.o: directorios src/compilador.cpp
 	$(CXX) $(CXXFLAGS) -c src/compilador.cpp -o build/compilador.o
 
@@ -20,9 +23,9 @@ polinomio.o: directorios src/polinomio.cpp
 main.o: directorios main.cpp
 	$(CXX) $(CXXFLAGS) -c main.cpp -o build/main.o
 
-all: clean main.o compilador.o monomio.o polinomio.o
+all: clean main.o utils.o compilador.o monomio.o polinomio.o
 	$(CXX) $(CXXFLAGS) -o dist/programa \
-	build/main.o build/compilador.o build/monomio.o build/polinomio.o \
+	build/main.o build/utils.o build/compilador.o build/monomio.o build/polinomio.o \
 	$(LIBS)
 	rm -fr build
 

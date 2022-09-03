@@ -1,34 +1,82 @@
+#include <iostream>
+#include <charconv>
+#include <regex>
+#include <algorithm>
+#include "utils.hpp"
 #include "compilador.hpp"
 #include "monomio.hpp"
 
-Compilador::Compilador(std::string expresion) : expresion(expresion)
+#define PATRON_MONOMIO "^([\\-\\+])?(\\d*\\.?\\d+)?(?:(x)(?:(?:\\*\\*)([0-9]))?)?$"
+
+const auto Compilador::patron_monomio = std::regex(PATRON_MONOMIO);
+
+Compilador::Compilador(std::string expresion)
 {
+    using namespace utils;
+    this->expresion = con_negativos_explicitos(a_minusculas(sin_espacios(expresion)));
+}
+
+Compilador::tokens_t Compilador::separar() const
+{
+    return utils::separar(this->expresion, '+');
+}
+
+std::smatch Compilador::extraer_token(const std::string &token) const
+{
+    return *std::sregex_iterator(token.begin(), token.end(),
+                                 Compilador::patron_monomio);
 }
 
 // @TODO Implementar método.
-Compilador::tokens_t Compilador::tokenizar() const
+Monomio Compilador::evaluar_token(const std::string &token) const
 {
-    return {};
+    if (!this->es_token_valido(token))
+        throw std::invalid_argument("El token no es válido: " + token);
+
+    std::smatch match = this->extraer_token(token);
+
+    auto coeficiente = this->parse_coeficiente(match[TipoToken::SIGNO],
+                                               match[TipoToken::COEFICIENTE]);
+
+    auto grado = this->parse_grado(match[TipoToken::VARIABLE],
+                                   match[TipoToken::GRADO]);
+
+    return {coeficiente, grado};
 }
 
-// @TODO Implementar método.
-Monomio Compilador::evaluar_token() const
+Monomio::coeficiente_t
+Compilador::parse_coeficiente(const std::string &token_signo,
+                              const std::string &token_coeficiente) const
 {
-    return {0.0, 0};
+    // Si el token del coeficiente está vacío, el coeficiente es 1.0.
+    auto token_coeficiente_explicito = token_coeficiente.empty() ? "1.0" : token_coeficiente;
+    return std::stod(token_signo + token_coeficiente_explicito);
 }
 
-// @TODO Implementar método.
-bool Compilador::es_valido() const
+Monomio::grado_t
+Compilador::parse_grado(const std::string &token_variable,
+                        const std::string &token_grado) const
 {
-    return true;
+    // Si el token del grado está vacío, el grado es 0 si, a su vez, el token de
+    // la variable está vacío, y 1 en caso contrario.
+    // Ej: "2" -> grado 0, "2x" -> grado 1.
+    if (token_grado.empty())
+        return !token_variable.empty();
+
+    return std::stoul(token_grado);
 }
 
-// @TODO Implementar método.
+bool Compilador::es_token_valido(const std::string &token) const
+{
+    return std::regex_match(token, Compilador::patron_monomio);
+}
+
 Polinomio Compilador::compilar() const
 {
-    if (!this->es_valido())
-        throw std::invalid_argument("La expresión no es válida.");
+    Polinomio::terminos_t terminos;
 
-    auto tokens = tokenizar();
-    return {{}};
+    for (const auto &token : this->separar())
+        terminos.push_back(this->evaluar_token(token));
+
+    return {terminos};
 }
