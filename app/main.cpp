@@ -54,7 +54,7 @@ void resolver(std::string expresion)
 {
     auto compilador = Compilador(expresion);
     auto polinomio = compilador.compilar();
-    auto solucion = polinomio.resolver();
+    auto solucion = polinomio.raiz();
     std::cout << "Solución: " << solucion << '\n';
 }
 

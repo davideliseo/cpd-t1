@@ -29,7 +29,7 @@ double Polinomio::evaluar(double x) const
     return resultado;
 }
 
-double Polinomio::resolver() const
+double Polinomio::raiz() const
 {
     const auto derivado = this->derivado();
     double x = 0.0, fx, fdx;

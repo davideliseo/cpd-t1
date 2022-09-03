@@ -28,7 +28,7 @@ public:
      * Función que calcula la raíz del polinomio utilizando el método Newton-Raphson.
      * @return La raíz del polinomio.
      */
-    double resolver() const;
+    double raiz() const;
 
     /**
      * Función que calcula el derivado del polinomio.
