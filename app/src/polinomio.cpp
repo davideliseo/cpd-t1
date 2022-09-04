@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include <numeric>
 #include <vector>
 #include "polinomio.hpp"
 
@@ -21,12 +22,9 @@ Monomio::grado_t Polinomio::grado() const
 
 double Polinomio::evaluar(double x) const
 {
-    auto resultado = 0.0;
-
-    for (const auto &monomio : this->terminos)
-        resultado += monomio.evaluar(x);
-
-    return resultado;
+    return std::accumulate(this->terminos.begin(), this->terminos.end(), 0.0,
+                           [x](double acumulado, const Monomio &monomio)
+                           { return acumulado + monomio.evaluar(x); });
 }
 
 double Polinomio::raiz() const
@@ -61,7 +59,7 @@ Polinomio Polinomio::derivado() const
             derivados.push_back(derivado);
     }
 
-    return Polinomio(derivados);
+    return {derivados};
 }
 
 std::ostream &operator<<(std::ostream &out, const Polinomio &polinomio)

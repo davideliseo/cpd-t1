@@ -31,9 +31,14 @@ public:
     static const std::regex patron_monomio;
 
     /**
+     * Patrón de un polinomio.
+     */
+    static const std::regex patron_polinomio;
+
+    /**
      * Constructor de la clase Compilador.
      */
-    Compilador(std::string expresion);
+    Compilador(const std::string &expresion);
 
     /**
      * Función que compila la expresión en un polinomio.

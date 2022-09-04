@@ -2,23 +2,30 @@
 #include <charconv>
 #include <regex>
 #include <algorithm>
-#include "utils.hpp"
 #include "compilador.hpp"
 #include "monomio.hpp"
 
-#define PATRON_MONOMIO "^([\\-\\+])?(\\d*\\.?\\d+)?(?:(x)(?:(?:\\*\\*)([0-9]))?)?$"
+#define PATRON_MONOMIO "^([\\-\\+])?\\s*(\\d*\\.?\\d+)?(?:(x)(?:(?:\\*\\*)([0-9]))?)?\\s*$"
+#define PATRON_POLINOMIO "([\\+\\-]?[^\\-\\+]+)"
 
 const std::regex Compilador::patron_monomio(PATRON_MONOMIO);
+const std::regex Compilador::patron_polinomio(PATRON_POLINOMIO);
 
-Compilador::Compilador(std::string expresion)
+Compilador::Compilador(const std::string &expresion) : expresion(expresion)
 {
-    using namespace utils;
-    this->expresion = con_negativos_explicitos(a_minusculas(sin_espacios(expresion)));
 }
 
 Compilador::tokens_t Compilador::separar() const
 {
-    return utils::separar(this->expresion, '+');
+    Compilador::tokens_t tokens;
+    auto inicio = std::sregex_iterator(this->expresion.begin(), this->expresion.end(),
+                                       Compilador::patron_polinomio);
+    auto fin = std::sregex_iterator();
+
+    for (auto match = inicio; match != fin; ++match)
+        tokens.push_back(match->str());
+
+    return tokens;
 }
 
 std::smatch Compilador::extraer_token(const std::string &token) const
@@ -33,7 +40,7 @@ Monomio Compilador::evaluar_token(const std::string &token) const
     if (!this->es_token_valido(token))
         throw std::invalid_argument("El token no es válido: " + token);
 
-    std::smatch match = this->extraer_token(token);
+    auto match = this->extraer_token(token);
 
     auto coeficiente = this->parse_coeficiente(match[TipoToken::SIGNO],
                                                match[TipoToken::COEFICIENTE]);
@@ -74,9 +81,12 @@ bool Compilador::es_token_valido(const std::string &token) const
 Polinomio Compilador::compilar() const
 {
     Polinomio::terminos_t terminos;
+    auto separado = this->separar();
 
-    for (const auto &token : this->separar())
-        terminos.push_back(this->evaluar_token(token));
+    std::transform(separado.begin(), separado.end(),
+                   std::back_inserter(terminos),
+                   [this](const std::string &token)
+                   { return this->evaluar_token(token); });
 
     return {terminos};
 }
