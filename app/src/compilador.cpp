@@ -8,7 +8,7 @@
 
 #define PATRON_MONOMIO "^([\\-\\+])?(\\d*\\.?\\d+)?(?:(x)(?:(?:\\*\\*)([0-9]))?)?$"
 
-const auto Compilador::patron_monomio = std::regex(PATRON_MONOMIO);
+const std::regex Compilador::patron_monomio(PATRON_MONOMIO);
 
 Compilador::Compilador(std::string expresion)
 {
